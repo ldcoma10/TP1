@@ -23,10 +23,85 @@ public class Pila <T> {
 			tope=nodo;			
 		}		
 	}
-	
+	//mueve un elemento una posición hacia afuera de la pila
+	public void moverHaciaAfuera(T dato){
+		Pila <T> pilaTemp=new Pila<T>();
+		Nodo<T>aux=null;
+		if (dato!=getTope().getDato()){		
+			while (!esVacia()){
+				if (dato==getTope().getDato()){
+					aux=getTope();
+					pop();
+					break;
+				}
+				else{
+					
+					pilaTemp.push(getTope().getDato());
+					pop();
+				}
+				
+			
+			}	
+			
+			
+			int contador=0;
+			while (!pilaTemp.esVacia()){
+				if (contador==0){
+					push(pilaTemp.getTope().getDato());
+					push(aux.getDato());							
+				}
+				else{
+					push(pilaTemp.getTope().getDato());
+				}
+				
+				pilaTemp.pop();	
+				contador++;
+			}
+		}
+		
+		
+	}
+	public void moverHaciaAdentro(T dato){
+		Pila <T> pilaTemp=new Pila<T>();
+		Nodo<T>aux=null;
+		while (!esVacia()){
+				if (dato==getTope().getDato()){
+					aux=getTope();
+					pop();
+					if (aux.getSiguiente()!=null){
+						pilaTemp.push(getTope().getDato());
+						pilaTemp.push(aux.getDato());
+						pop();
+					}
+					else{
+						pilaTemp.push(aux);
+					}
+					break;
+				}
+				else{
+					
+					pilaTemp.push(getTope().getDato());
+					pop();
+				}
+				
+			
+			}	
+			
+			
+			
+			while (!pilaTemp.esVacia()){
+				push(pilaTemp.getTope().getDato());
+				pilaTemp.pop();	
+				
+			}
+		
+		
+		
+	}
 	public void pop(){
-		if (!esVacia()){
-			tope=tope.getSiguiente();		
+		if (!esVacia()){			
+			tope=tope.getSiguiente();
+			
 		}
 		else{
 			System.err.println("No se pudo eliminar, ya que la pila está vacía");
@@ -41,6 +116,31 @@ public class Pila <T> {
 		}
 		else{
 			System.err.println("No se pudo modificar, ya que la pila está vacía");
+		}
+	}
+	
+   public void imprimir(){
+	   
+		
+		if (!esVacia()){			
+			Nodo <T> aux=tope;			
+			String listaImpresa="[";
+			
+			while(aux!=null){
+				if(aux.getSiguiente()!=null){
+					listaImpresa+=aux.getDato()+",";					
+				}	
+				else{
+					listaImpresa+=aux.getDato();
+					
+				}
+				aux=aux.getSiguiente();	
+			}
+			
+			System.out.println(listaImpresa+"]");
+		}
+		else{
+			System.out.println("[]");
 		}
 	}
 	

@@ -109,6 +109,9 @@ public class ListaSimple<T>  {
 			System.err.println("No se pudo insertar, el índice excede el tamaño de la lista");
 		}
 	}
+	public void eliminar(T dato){
+		eliminar(buscar(dato));		
+	}
 	public void eliminar(int index){
 		if (index<tamano() && index>=0){
 			if (index==0){
@@ -165,19 +168,36 @@ public class ListaSimple<T>  {
 		}
 		
 	}
+	public int buscar(T dato){
+		Nodo <T>aux=inicio;		
+		for(int i=0;aux!=null;i++){
+			if (dato==aux.getDato()){
+				return i;
+			}
+			aux=aux.getSiguiente();
+		}
+		return -1;
+		
+	}
+	
 	public void imprimir(){
 		
+
 		if (!esVacia()){			
 			Nodo <T> aux=inicio;			
 			String listaImpresa="[";
 			
-			while(aux.getSiguiente()!=null){				
-				listaImpresa+=aux.getDato()+",";
-				aux=aux.getSiguiente();					
+			while(aux!=null){
+				if(aux.getSiguiente()!=null){
+					listaImpresa+=aux.getDato()+",";					
+				}	
+				else{
+					listaImpresa+=aux.getDato();
+					
+				}
+				aux=aux.getSiguiente();	
 			}
-			if (aux!=null){
-				listaImpresa+=aux.getDato();
-			}
+			
 			System.out.println(listaImpresa+"]");
 		}
 		else{
