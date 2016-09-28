@@ -1,8 +1,6 @@
-package org.tec.tarea_programada.objetos;
-
 import java.util.Random;;
 
-public class NodoObjeto {
+public class Objeto {
 	protected boolean objeto;
 	protected boolean poder;
 	protected String tipo;
