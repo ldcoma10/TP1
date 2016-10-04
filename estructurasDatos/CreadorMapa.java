@@ -1,5 +1,4 @@
-package org.tec.tarea_programada.matriz;
-
+package estructurasDatos;
 public class CreadorMapa <T> {
 	
 	private NodoMapa <T> cabezaPrincipal; //Puntero que se ubica en el primer nodo de la primera lista

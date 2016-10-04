@@ -1,4 +1,4 @@
-package org.tec.tarea_programada.matriz;
+package estructurasDatos;
 
 public class NodoMapa <T> {
 		

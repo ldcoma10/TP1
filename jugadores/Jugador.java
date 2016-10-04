@@ -3,6 +3,9 @@ package jugadores;
 public class Jugador extends Thread {
 	private String nombre;
 	private boolean activo;
+	private Integer ubicacionFila;
+	private Integer ubicacionColumna;
+	
 	
 	Jugador(){
 		nombre=null;
