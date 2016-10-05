@@ -1,18 +1,18 @@
-package logica;
+package org.tec.tarea_programada;
 
-import elementos.Objeto;
+public class Estela{
+	
+	public String id;
+	public Estela siguienteEstela;
+	public NodoMapa<?> lugarEnMapa;
+	
+	public Estela(String id){
 
-public class Estela extends Objeto{
-	
-	protected Estela cola;
-	protected Estela lugarEnMapa;
-	
-	public Estela(){
-		this.objeto = false;
-		this.poder = false;
-		this.tipo = "Estela";
-		this.cola = null;
+		this.id = id;
+		this.siguienteEstela = null;
 		this.lugarEnMapa = null;
 	}	
+	
+	public Estela(){}
 	
 }
