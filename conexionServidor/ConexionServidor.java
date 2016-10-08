@@ -8,7 +8,10 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.ArrayBlockingQueue;
 
 
-
+/**
+ * Clase del servidor
+ *
+ */
 public class ConexionServidor extends Thread{
  
     
@@ -27,7 +30,9 @@ public class ConexionServidor extends Thread{
         socket.setSoTimeout(100000000);
     }
     
- 
+    /**
+     * Método que inicia threads
+     */
     public void run(){
         try{
             InetAddress direccionPropia = InetAddress.getLocalHost();
@@ -40,6 +45,10 @@ public class ConexionServidor extends Thread{
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Método que conecta en un puerto designado
+     */
     public void conectar(){
     	int puerto = 8085;
     	
