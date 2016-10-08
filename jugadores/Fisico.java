@@ -16,11 +16,25 @@ import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Clase que maneja los jugadores físicos
+ *
+ */
 public class Fisico  extends Jugador{
+	
+	/**
+	 * IP ip del server al que se quiere conectar
+	 * queue cola de jugadores esperando conectarse a la sesion
+	 * buffer1 es un buffer
+	 */
 	private String IP;
 	public ArrayBlockingQueue<Integer> queue=new ArrayBlockingQueue<Integer>(999);
 	static BufferedReader buffer1 = new BufferedReader(new InputStreamReader(System.in));
 	int n;
+	
+	/**
+	 * Constructor
+	 */
 	public Fisico(){
 		IP=null;
 		n=0;
@@ -37,6 +51,9 @@ public class Fisico  extends Jugador{
 	}
 
 
+	/**
+	 * Método que conecta al jugador a la sesion en el server
+	 */
 	public void conectar(){
 		try{
              
@@ -174,17 +191,7 @@ public class Fisico  extends Jugador{
                 	
                 	
                 }; 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-             
-            
+                
             Thread prueba = new Thread(){
                 public void run(){
                 	try {
