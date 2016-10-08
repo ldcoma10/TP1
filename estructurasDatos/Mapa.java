@@ -1,224 +1,89 @@
 package estructurasDatos;
-
-import java.util.LinkedList;
-
-public class Mapa<T>  {
-
-	private NodoMapa<T> inicio;
+import patronesDeDiseno.*;
+/**
+ * Clase creadora del mapa de juego a base de nodos con 4 enlaces
+ * @author andre
+ *
+ * @param <T> tipo de dato del que se compondrá los nodos del mapa
+ */
+@SuppressWarnings("unchecked")
+public class Mapa <T> {
 	
+	/**
+	 * cabezaFinal Puntero que se ubica en la  lista que se va a enlazar
+	 */
+	public NodoMapa <T> cabezaFinal; 
 	
-	public Mapa(){
-		inicio=null;
-	}
-
-	public NodoMapa<T> getInicio() {
-		return inicio;
-	}
-
-	public void setInicio(NodoMapa<T> inicio) {
-		this.inicio = inicio;
-	}
-	
-	public boolean esVacia(){
-		return inicio==null;
-	}
-	public void insertarInicio(T dato){
+	/**
+	 * Constructor del mapa tétramente enlazado y circular
+	 * @param y largo del mapa
+	 * @param x ancho del mapa
+	 */
+	public Mapa(int y, int x) {
 		
-		NodoMapa <T> nodo=new NodoMapa<T>(dato);
-		insertarInicio(nodo);
-	}
-	public void insertarInicio(NodoMapa<T> nodo){
+		TamanoMapa.setAncho(x);
+		TamanoMapa.setAlto(y);
 		
-		if (esVacia()){
-			setInicio(nodo);
-
-
-		}
-		else{
-			nodo.setDerecha(inicio);			
-			inicio=nodo;
+		NodoMapa <T> punteroActualHead = null; //Puntero que se ubica en la útlima fila enlazada
+		
+		for ( int linea = 1; linea <= y; linea ++ ) { //Crea la cantidad de listas necesarios según la cantidad de filas
 			
-		}
-		
-	}
-	public void insertarFinal(T dato){
-		NodoMapa <T> nodo=new NodoMapa<T>(dato);
-		insertarFinal(nodo);
-		
-	}
-	
-	public void insertarFinal(NodoMapa<T> nodo){
-		if (esVacia()){
-			setInicio(nodo);
-		}
-		else{
-			NodoMapa<T> aux=inicio;
-			while(aux.getDerecha()!=null){				
-				aux=aux.getDerecha();					
-			}
-			aux.setDerecha(nodo);
-		}
-		
-	}
-	public int tamano(){
-		int tamano=0;
-		if (!esVacia()){		
-			NodoMapa<T> aux=inicio;
-			for(;aux.getDerecha()!=null;tamano++){
-				aux=aux.getDerecha();
-			}
-			tamano++;
-		}
-		return tamano;
-	}
-	public void insertarPosicion(T dato,int index){
-		NodoMapa <T> nodo=new NodoMapa<T>(dato);
-		insertarPosicion(nodo,index);
-		
-	}
-	public void insertarPosicion(NodoMapa<T> nodo,int index){
-		if (index<=tamano() && index>=0){
-			if (index==0){
-				insertarInicio(nodo);
-			}
-			else if (tamano()==index){
-				insertarFinal(nodo);				
-			}
-			else{
-				NodoMapa <T> aux=inicio;
-				NodoMapa <T>temp=inicio;
-				int contador=0;
-				while (contador!=index){
-					if (contador==index-1){
-						temp=aux;
+			for ( int columna = 1; columna <= x; columna ++) { //Crea la cantidad de nodos necesarios según la cantidad de columnas
+				
+				NodoMapa <T> nodo = new NodoMapa <T>(linea, columna); //Crea un nodo nuevo para la lista
+				
+				if (columna > 1 && columna < x) { //Para los nodos que están de por medio, los enlaza derecha e izquierda
+					NodoMapa <T> punteroActual = this.cabezaFinal;
+					while (punteroActual.derecha != null) {
+						punteroActual = punteroActual.derecha;
 					}
-					aux=aux.getDerecha();
-					contador++;
-				}
-				temp.setDerecha(nodo);
-				nodo.setDerecha(aux);
-				
-			}
-			
-		}
-		else if (index<0){
-			System.err.println("No se pudo insertar, el Ã­ndice debe ser mayor o igual que cero");
-		}
-		
-		else{
-			System.err.println("No se pudo insertar, el Ã­ndice excede el tamaÃ±o de la lista");
-		}
-	}
-	public void eliminar(int index){
-		if (index<tamano() && index>=0){
-			if (index==0){
-				inicio=inicio.getDerecha();
-			}
-			else if(tamano()-1==index){
-				NodoMapa <T> aux=inicio;
-				int contador=0;
-				while(contador<tamano()-2){
-					aux=aux.getDerecha();
-					contador++;
-				}
-				aux.setDerecha(null);
-			}
-			else{
-				NodoMapa <T> aux=inicio;
-				NodoMapa <T>temp=inicio;
-				int contador=0;
-				while (contador!=index){
-					if (contador==index-1){
-						temp=aux;
+					punteroActual.derecha = nodo;
+					nodo.izquierda = punteroActual;
+					
+				} else if (columna == 1) { //Ubica el finalHead en la cabeza de la lista que se está creando
+					this.cabezaFinal = nodo;
+					
+					if (PosicionCero.getCabezaPrincipal() == null) { //Ubica el mainHead en la primera lista de la matriz
+						PosicionCero.setCabezaPrincipal(this.cabezaFinal);
 					}
-					aux=aux.getDerecha();
-					contador++;
+					
+				} else if (columna == x ){ //Enlaza el final de la lista con el inicio de la lista para hacerl circular de left y right
+					NodoMapa <T> punteroActual = this.cabezaFinal;
+					while (punteroActual.derecha != null) {
+						punteroActual = punteroActual.derecha;
+					}
+					punteroActual.derecha = nodo;
+					nodo.izquierda = punteroActual;
+					this.cabezaFinal.izquierda = nodo;
+					nodo.derecha = this.cabezaFinal;
 				}
-				temp.setDerecha(aux.getDerecha());
-				aux.setDerecha(null);
+			}
+			
+			if (this.cabezaFinal == PosicionCero.getCabezaPrincipal()){ //Ubica el punteroActual en la primera lista creada para tener el puntero listo cuando se quiera enlazar con la segunda lista
+				punteroActualHead = (NodoMapa<T>) PosicionCero.getCabezaPrincipal();
+
+			} else { //Enlaza los nodos de la última lista enlazada con la nueva lista creada de manera up y down
+				NodoMapa <T> nodoUnir1 = punteroActualHead;
+				NodoMapa <T> nodoUnir2 = this.cabezaFinal;
+				for (int link = 1; link <= x; link ++) {
+					nodoUnir1.abajo = nodoUnir2;
+					nodoUnir2.arriba = nodoUnir1;
+					nodoUnir1 = nodoUnir1.derecha;
+					nodoUnir2 = nodoUnir2.derecha;
+				}
+				punteroActualHead = this.cabezaFinal; //Ubica el punteroActual en la última lista enlazada para tenerlo ubicado en la lista que se tiene que enlazar cuando el finalHead cambie
 				
-			}
-			
-		}
-		else if (index<0){
-			System.err.println("No se pudo eliminar, el Ã­ndice debe ser mayor o igual que cero");
-		}
-		
-		else{
-			System.err.println("No se pudo eliminar, el Ã­ndice excede el tamaÃ±o de la lista");
-		}
-		
-	}
-	public void modificarPosicion(int index, NodoMapa <T>nodo){
-		modificarPosicion(index, nodo.getDato());		
-	}
-	public void modificarPosicion(int index,T dato){
-		if (index<tamano()){
-			NodoMapa <T>aux=inicio;
-			for(int contador=0;contador!=index;contador++){
-				aux=aux.getDerecha();
-			}
-			aux.setDato(dato);
-		}
-		else{
-			System.err.println("No se pudo modificar, el Ã­ndice excede el tamaÃ±o de la lista");
-		}
-		
-	}
-	public void imprimir(){
-		
-		if (!esVacia()){			
-			NodoMapa <T> aux=inicio;			
-			String listaImpresa="[";
-			
-			while(aux.getDerecha()!=null){				
-				listaImpresa+=aux.getDato()+",";
-				aux=aux.getDerecha();					
-			}
-			if (aux!=null){
-				listaImpresa+=aux.getDato();
-			}
-			System.out.println(listaImpresa+"]");
-		}
-		else{
-			System.out.println("[]");
-		}
-	}
-	
-	
-	public /*Mapa*/ void formarMapa(int filas, int columnas){
-		NodoMapa<T> aux=null;
-		NodoMapa <T>first=inicio;
-		ListaSimple<Nodo<T>>formacion=new ListaSimple<Nodo<T>>();
-		for(int i=0;i<filas; i++){
-			for(int j=0;j<filas;j++){
-				NodoMapa <T> celda=new NodoMapa <T>();
-				celda.cordenadaX=i;
-				celda.cordenadaY=j;
-				if (j==0){
-					aux=celda;
-					first=celda;
+				if (linea == y) { //enlaza la primera lista con la última lista los up y down para hacerla circular
+					nodoUnir1 = (NodoMapa<T>) PosicionCero.getCabezaPrincipal();
+					nodoUnir2 = this.cabezaFinal;
+					for (int link = 1; link <= x; link ++) {
+						nodoUnir1.arriba = nodoUnir2;
+						nodoUnir2.abajo = nodoUnir1;
+						nodoUnir1 = nodoUnir1.derecha;
+						nodoUnir2 = nodoUnir2.derecha;
+					}
 				}
-				else if(j==filas-1){
-					aux.setDerecha(celda);
-					Nodo <NodoMapa<T>>nodo=new Nodo<NodoMapa<T>>();
-					formacion.insertarFinal((Nodo<T>) nodo);
-				}
-				else if (j!=0){
-					celda.setIzquierda(aux);
-					aux.setDerecha(celda);
-					aux=aux.getDerecha();					
-				}
-				
-			}
-			
-			
-				
-			
+			} 
 		}
-			
-		//return Mapa;
 	}
-	
-	
 }

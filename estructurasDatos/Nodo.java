@@ -1,24 +1,39 @@
 package estructurasDatos;
-
-public class Nodo <T> { // Clase que genera los nodos a los que se les asignará los valores a emplear
+/**
+ * Clase creadora de nodos
+ * @param <T>
+ */
+public class Nodo <T> {
+	
+	/**
+	 * dato dato de tipo T que guarda el nodo
+	 * siguiente puntero haciendo referencia al próximo nodo
+	 */
 	private T dato;
 	private Nodo <T>  siguiente;
 	
-	public Nodo(){  
-		this.dato=null;
-		this.siguiente=null;
+	/**
+	 * Constructor del nodo sin parámetros
+	 */
+	public Nodo(){
+		this.dato = null;
+		this.siguiente = null;
 	}
 	
-	public Nodo(T dato){  
-		this.dato=dato;
-		this.siguiente=null;
+	/**
+	 * Constructor del nodo
+	 * @param dato dato a guardar en el nodo
+	 */
+	public Nodo(T dato){
+		this.dato = dato;
+		this.siguiente = null;
 	}
 
-	public T getDato() { //Retorna el dato que el nodo posee
+	public T getDato() {
 		return dato;
 	}
 
-	public void setDato(T dato) {  //Asigna al nodo el dato que este representará
+	public void setDato(T dato) {
 		this.dato = dato;
 	}
 
@@ -29,8 +44,4 @@ public class Nodo <T> { // Clase que genera los nodos a los que se les asignará 
 	public void setSiguiente(Nodo<T> siguiente) {
 		this.siguiente = siguiente;
 	}
-	
-	
-	
-
 }

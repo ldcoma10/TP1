@@ -1,4 +1,4 @@
-package org.tec.tarea_programada;
+package estructurasDatos;
 
 /**
  * Clase que define los nodos que compondrán el mapa del juego
@@ -38,6 +38,21 @@ public class NodoMapa <T> {
 		this.derecha = null;
 		this.coordenadaY = i;
 		this.coordenadaX = j;		
+	}
+
+	/**
+	 * Constructor del nodo
+	 * @param dato dato que almacena
+	 */
+	public NodoMapa(T dato2) {
+		// TODO Auto-generated constructor stub
+	}
+		
+	/**
+	 * Contructor
+	 */
+	public NodoMapa() {
+		
 	}
 
 }
