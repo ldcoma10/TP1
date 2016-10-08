@@ -10,7 +10,7 @@ public class Moto extends Estela{
 	public String nombre;
 	public NodoMapa<Estela> cabezaPrincipal;
 	
-	public Moto(String id, String nombre, NodoMapa<Estela> cabezaPrincipal){
+	public Moto(String id, String nombre, int x, int y, NodoMapa<Estela> cabezaPrincipal){
 		
 		Random rand = new Random();
 		int randomVelocidad = (rand.nextInt(11) + 1);
@@ -21,6 +21,9 @@ public class Moto extends Estela{
 		this.nombre = nombre;
 		this.cabezaPrincipal = cabezaPrincipal;
 		this.vida = true;
+		
+		this.ubicacionX = x;
+		this.ubicacionY = y;
 		
 		this.siguienteEstela = new Estela(this.id);
 		
