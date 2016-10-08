@@ -1,4 +1,4 @@
-package org.tec.tarea_programada;
+package patronesDeDiseno;
 
 /**
  * Singleton del tamaño del mapa ya que estas variables nunca cambian por la duración del juego

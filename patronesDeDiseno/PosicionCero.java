@@ -1,4 +1,7 @@
-package org.tec.tarea_programada;
+package patronesDeDiseno;
+
+import estructurasDatos.NodoMapa;
+
 /**
  * Patrón de diseño Singleton
  * @author andre
