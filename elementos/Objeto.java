@@ -1,8 +1,9 @@
-package org.tec.tarea_programada;
+package elementos;
 
 import java.util.Random;
-import org.tec.tarea_programada.PosicionCero;
-import org.tec.tarea_programada.TamanoMapa;
+
+import estructurasDatos.NodoMapa;
+import patronesDeDiseno.*;
 /**
  * Clase que crea los items y poderes y contiene los atributos más importantes de los elemenos a heredar
  * @author andre

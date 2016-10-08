@@ -3,7 +3,7 @@
  * @author andre
  */
 
-package org.tec.tarea_programada;
+package elementos;
 
 public class Estela extends Objeto{
 

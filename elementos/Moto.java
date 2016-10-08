@@ -1,7 +1,9 @@
-package org.tec.tarea_programada;
+package elementos;
 
 import java.util.Random;
-import org.tec.tarea_programada.PosicionCero;
+
+import estructurasDatos.*;
+import patronesDeDiseno.PosicionCero;
 
 /**
  * Clase que genera las motos del juego
@@ -16,6 +18,9 @@ public class Moto extends Estela{
 	 * velocidad es un número aleatorio que indica que tan rápido de mueve la moto
 	 * combustible indica el combustible que le queda a la moto para moverse
 	 * nombre es como se identifica el jugador
+	 * contadorDePasos hace que cada 5 movimientos se disminuya en 1 el combustible
+	 * colaItems es una lista con los items que se han recogido y se devolverán al mapa cuando muera este jugador (solo crecimiento estela se devuelve ya que la gasolina se consume)
+	 * pilaPoderes es una lista con los poderes almacenados, estos se pueden mover arriba o abajo y se consume el primero. 
 	 */
 	public boolean escudo;
 	public boolean vida;
@@ -153,12 +158,22 @@ public class Moto extends Estela{
 		
 		case "Escudo":
 			this.escudo = true;
-			//Thread que dure lo que dura pilaPoderes.getTope().getDato().duracion; para después reanudar el método y quitar el escudo
+			int tiempo1 = pilaPoderes.getTope().getDato().duracion * 1000;
+	       
+			try {
+	            wait(tiempo1);
+	        } catch (Exception e) {}
+			
 			this.escudo = false;
 			
 		case "Hiper Velocidad":
 			this.velocidad += pilaPoderes.getTope().getDato().masVelocidad;
-			//Thread que dure lo que dura pilaPoderes.getTope().getDato().duracion; para después reanudar el método y quitar la velocidad extra
+			int tiempo2 = pilaPoderes.getTope().getDato().duracion * 1000;
+			
+	        try {
+	            wait(tiempo2);
+	        } catch (Exception e) {}
+			
 			this.velocidad -= pilaPoderes.getTope().getDato().masVelocidad;
 		}
 		
