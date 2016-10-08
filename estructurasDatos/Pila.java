@@ -1,6 +1,6 @@
 package estructurasDatos;
 
-public class Pila <T> {
+public class Pila <T> {  //Clase que implementa la estructura de un Pila, a la cual se le asignan valores que se  ejecutan en función a First In/Last Out
 	private Nodo<T> tope;
 	public Nodo<T> getTope() {
 		return tope;
@@ -61,7 +61,7 @@ public class Pila <T> {
 		
 		
 	}
-	public void moverHaciaAdentro(T dato){
+	public void moverHaciaAdentro(T dato){  //Método que envía el dato evaluado hacia adentro de la lista
 		Pila <T> pilaTemp=new Pila<T>();
 		Nodo<T>aux=null;
 		while (!esVacia()){
@@ -120,7 +120,7 @@ public class Pila <T> {
 	}
 	
    public void imprimir(){
-	   
+	   //Método que imprime la lista con sus elementos
 		
 		if (!esVacia()){			
 			Nodo <T> aux=tope;			

@@ -3,7 +3,7 @@
  */
 package org.tec.tarea_programada;
 
-public class NodoMapa <T> {
+public class NodoMapa <T> {  //Clase principal que ubica el nodo a trabajar dentro de la matriz del juego
 		
 	public T dato;
 	public NodoMapa<T> arriba;

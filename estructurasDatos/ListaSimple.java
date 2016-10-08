@@ -2,31 +2,31 @@ package estructurasDatos;
 
 
 
-public class ListaSimple<T>  {
+public class ListaSimple<T>  {   //Clase que implementa una lista simple 
 
 	private Nodo<T> inicio;
 	
-	public ListaSimple(){
+	public ListaSimple(){   //Declara el inicio de la lista como nulo
 		inicio=null;
 	}
 
-	public Nodo<T> getInicio() {
+	public Nodo<T> getInicio() {   //Método que retorna el inicio de la lista
 		return inicio;
 	}
 
-	public void setInicio(Nodo<T> inicio) {
+	public void setInicio(Nodo<T> inicio) {   //Método que establece el nuevo inicio de la lista
 		this.inicio = inicio;
 	}
 	
-	public boolean esVacia(){
+	public boolean esVacia(){    //Método que evalúa si la lista es vacía y en caso de serlo, iguala el inicio de esta como nulo
 		return inicio==null;
 	}
-	public void insertarInicio(T dato){
+	public void insertarInicio(T dato){  
 		
 		Nodo <T> nodo=new Nodo<T>(dato);
 		insertarInicio(nodo);
 	}
-	public void insertarInicio(Nodo<T> nodo){
+	public void insertarInicio(Nodo<T> nodo){  //Método que decide si asigna el nuevo nodo como el inicial o solo como el siguiente, dependiendo de si la lista es vacía o no.
 		
 		if (esVacia()){
 			setInicio(nodo);
@@ -40,7 +40,7 @@ public class ListaSimple<T>  {
 		}
 		
 	}
-	public void insertarFinal(Nodo<T> nodo){
+	public void insertarFinal(Nodo<T> nodo){  //Método que apunte al último nodo de la lista
 		if (esVacia()){
 			setInicio(nodo);
 		}
@@ -60,7 +60,7 @@ public class ListaSimple<T>  {
 	}
 	
 	
-	public int tamano(){
+	public int tamano(){   //Se evalúa el tamaño de la lista
 		int tamano=0;
 		if (!esVacia()){		
 			Nodo<T> aux=inicio;
@@ -71,7 +71,7 @@ public class ListaSimple<T>  {
 		}
 		return tamano;
 	}
-	public void insertarPosicion(T dato,int index){
+	public void insertarPosicion(T dato,int index){   
 		Nodo <T> nodo=new Nodo<T>(dato);
 		insertarPosicion(nodo,index);
 		
@@ -112,7 +112,7 @@ public class ListaSimple<T>  {
 	public void eliminar(T dato){
 		eliminar(buscar(dato));		
 	}
-	public void eliminar(int index){
+	public void eliminar(int index){   //Método que permite eliminar datos dentro de la lista
 		if (index<tamano() && index>=0){
 			if (index==0){
 				inicio=inicio.getSiguiente();
@@ -155,7 +155,7 @@ public class ListaSimple<T>  {
 	public void modificarPosicion(int index, Nodo <T>nodo){
 		modificarPosicion(index, nodo.getDato());		
 	}
-	public void modificarPosicion(int index,T dato){
+	public void modificarPosicion(int index,T dato){   //Permite modificar y variar la posición de un dato dentro de la lista
 		if (index<tamano()){
 			Nodo <T>aux=inicio;
 			for(int contador=0;contador!=index;contador++){
@@ -180,7 +180,7 @@ public class ListaSimple<T>  {
 		
 	}
 	
-	public void imprimir(){
+	public void imprimir(){  //Retorna o imprime la lista simple
 		
 
 		if (!esVacia()){			

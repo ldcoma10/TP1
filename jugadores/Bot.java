@@ -7,18 +7,18 @@ public class Bot extends Jugador {      //Clase Bot que asigna las característic
 	private Integer ubicacionColumna;
 	
 		
-	public Bot(){						
+	public Bot(){				//Evalúa si el bot se encuentra activo o no		
 		activo=false;
 		}
 		public String getNombre() {
 			return nombre;
 		}
 
-		public void setNombre(String nombre) {
+		public void setNombre(String nombre) {   //Método que retorna el nombre del jugador
 			this.nombre = nombre;
 		}
 
-		public boolean isActivo() {
+		public boolean isActivo() {   //Método que retorna el estado de activo que presenta el jugador en el momento
 			return activo;
 		}
 
