@@ -3,11 +3,22 @@ package sockets;
 import java.io.*;
 import java.net.*;
  
+/**
+ * Clase cliente
+ *
+ */
 public class Cliente extends Thread{
 	
+	/**
+	 *Constructor de la conexión
+	 */
 	public void conexion(){
 		
 	}
+	
+	/**
+	 * Método inicializador
+	 */
     public static void main(String args[]){
         try{
             final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

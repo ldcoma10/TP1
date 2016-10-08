@@ -3,17 +3,35 @@ package sockets;
 import java.net.*;
 import java.io.*;
  
+/**
+ * Clase del servidor
+ * @author andre
+ *
+ */
 public class Servidor extends Thread{
  
-    
+    /**
+     * serverSocket donde se encuentra el socket del server
+     * br BufferedReader
+     * server es un socket
+     */
     private ServerSocket serverSocket;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static Socket server; 
+    
+    /**
+     * Constructor
+     * @param port puerto donde está el socket
+     * @throws IOException Excepcion
+     */
     public Servidor(int port) throws IOException{
         serverSocket = new ServerSocket(port);
         serverSocket.setSoTimeout(100000000);
     }
  
+    /** 
+     * Método para iniciar threads
+     */
     public void run(){
         try{
             InetAddress my_address = InetAddress.getLocalHost();
@@ -26,7 +44,9 @@ public class Servidor extends Thread{
             e.printStackTrace();
         }
     }
-     
+     /**
+      * Método Main
+      */
     public static void main(String [] args){
         int port = 8085;
         try{
