@@ -1,16 +1,18 @@
 package org.tec.tarea_programada;
 
 public class Estela{
-	
+
 	public String id;
 	public Estela siguienteEstela;
-	public NodoMapa<?> lugarEnMapa;
+	public int ubicacionX;
+	public int ubicacionY;
 	
 	public Estela(String id){
 
 		this.id = id;
 		this.siguienteEstela = null;
-		this.lugarEnMapa = null;
+		this.ubicacionX = 0;
+		this.ubicacionY = 0;
 	}	
 	
 	public Estela(){}

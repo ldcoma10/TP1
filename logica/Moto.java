@@ -1,26 +1,30 @@
-package logica;
+package org.tec.tarea_programada;
 
 import java.util.Random;
 
-public class Moto extends Estela{    //Clase Moto la cual define la posición, velocidad y ubicación de la moto del usuario
+public class Moto extends Estela{
 	
+	public boolean vida;
 	public int velocidad;
 	public int combustible;
 	public String nombre;
-	public int ubicacionMotoX;
-	public int ubicacionMotoY;
+	public NodoMapa<Estela> cabezaPrincipal;
 	
-	public Moto(String id, String nombre){
+	public Moto(String id, String nombre, NodoMapa<Estela> cabezaPrincipal){
+		
 		Random rand = new Random();
 		int randomVelocidad = (rand.nextInt(11) + 1);
 	
 		this.velocidad = randomVelocidad;
-		combustible = 100;
+		this.combustible = 100;
 		this.id = id;
 		this.nombre = nombre;
+		this.cabezaPrincipal = cabezaPrincipal;
+		this.vida = true;
 		
-		//this.siguienteEstela = new Estela(this.id);
-		Estela actual = this;
+		this.siguienteEstela = new Estela(this.id);
+		
+		Estela actual = this.siguienteEstela;
 		
 		for (int contadorEstela = 0; contadorEstela < 3; contadorEstela ++){
 			actual.siguienteEstela = new Estela(this.id);
@@ -28,17 +32,17 @@ public class Moto extends Estela{    //Clase Moto la cual define la posición, ve
 		}
 	}
 
-	
-	public boolean verificarSiguienteMovimiento(NodoMapa<?> siguienteMovimiento){     //Método que evalúa la validez del siguiente puesto que adopte la moto del usuario, dependiendo de su decisión.
+
+	public boolean verificarSiguienteMovimiento(NodoMapa<Estela> nodoMapa){
 		boolean validez = false;
 		
-		if (siguienteMovimiento.getDato() == null || siguienteMovimiento.getDato() == "0"){
+		if (nodoMapa.dato == null){
 			validez = true;
 			
 		}  else {
 			
 			try {
-				if (siguienteMovimiento.getDato().getId == this.id){
+				if (nodoMapa.dato.id == this.id){
 					validez = true;
 				}
 			} catch (Exception e){}
@@ -47,93 +51,111 @@ public class Moto extends Estela{    //Clase Moto la cual define la posición, ve
 		return validez;
 	}
 	
-	public void moverDerecha(){     //Método que se ejecuta si el usuario selecciona virar hacia la derecha
-		if (this.verificarSiguienteMovimiento(this.lugarEnMapa.getDerecha()) == true){
-			mover(this.lugarEnMapa, this.lugarEnMapa.getDerecha());
-			this.ubicacionMotoX = this.lugarEnMapa.getCoordenadaX();
-			this.ubicacionMotoY = this.lugarEnMapa.getCoordenadaY();
-		} else {
-			eliminarMoto(this.lugarEnMapa, this.siguienteEstela.lugarEnMapa);
-		}
-	}
-	
-	public void moverIzquierda(){    //Método que ejecuta el movimiento hacia la izquierda de la moto del usuario
-		if (this.verificarSiguienteMovimiento(this.lugarEnMapa.getIzquierda()) == true){
-			mover(this.lugarEnMapa, this.lugarEnMapa.getIzquierda());
-			this.ubicacionMotoX = this.lugarEnMapa.getCoordenadaX();
-			this.ubicacionMotoY = this.lugarEnMapa.getCoordenadaY();			
-		} else {
-			eliminarMoto(this.lugarEnMapa, this.siguienteEstela.lugarEnMapa);
-		}		
-	}
-	
-	public void moverArriba(){    //Método que hace que la moto se desplaze hacia arriba
-		if (this.verificarSiguienteMovimiento(this.lugarEnMapa.getArriba()) == true){
-			mover(this.lugarEnMapa, this.lugarEnMapa.getArriba());
-			this.ubicacionMotoX = this.lugarEnMapa.getCoordenadaX();
-			this.ubicacionMotoY = this.lugarEnMapa.getCoordenadaY();
-		} else {
-			eliminarMoto(this.lugarEnMapa, this.siguienteEstela.lugarEnMapa);
-		}
-	}
-	
-	public void moverAbajo(){     //Método que hace que la moto se desplaze hacia abajo
-		if (this.verificarSiguienteMovimiento(this.lugarEnMapa.getAbajo()) == true){
-			mover(this.lugarEnMapa, this.lugarEnMapa.getAbajo());
-			this.ubicacionMotoX = this.lugarEnMapa.getCoordenadaX();
-			this.ubicacionMotoY = this.lugarEnMapa.getCoordenadaY();
-		} else {
-			eliminarMoto(this.lugarEnMapa, this.siguienteEstela.lugarEnMapa);
-		}
-	}
-	
-	public static void mover(NodoMapa<?> actual, NodoMapa<?> siguiente){
-		try {
-			
-			while (actual.getDato().siguienteEstela != null){
-				siguiente.setDato(actual.getDato());
-				actual.getDato().lugarEnMapa = siguiente;
-				
-				siguiente = actual;
-				actual = actual.getDato().siguienteEstela.lugarEnMapa;
-				
-				if (actual == null){
-					siguiente.setDato(siguiente.getDato().siguienteEstela);
-					siguiente.getDato().lugarEnMapa = siguiente;
-					break;
-				}
-			} 
-			
-			if (actual != null){
-				siguiente.setDato(actual.getDato());
-				actual.getDato().lugarEnMapa = siguiente;
-				actual.setDato(null);
-			}
-			
-		} catch (Exception e){}
-	}
-	
-	public static void eliminarMoto(NodoMapa<?> actual, NodoMapa<?> anterior){      //Método que elimina la moto si esta choca contra otra moto o la estela de esta.
-		try {
-			if (anterior != null){
-				while (anterior.getDato().siguienteEstela != null){
-					actual.getDato().lugarEnMapa = null;
-					actual.setDato(null);
-					
-					actual = anterior;
-					anterior = anterior.getDato().siguienteEstela.lugarEnMapa;
-					
-				}
-				
-				anterior.getDato().lugarEnMapa = null;
-				anterior.setDato(null);
-			}
-			
-			actual.getDato().lugarEnMapa = null;
-			actual.setDato(null);
+	public void moverDerecha(){
+		if (this.vida == true){
 
-		} catch (Exception e){}		
+			NodoMapa<Estela> siguienteNodo = this.buscarNodo(ubicacionX, ubicacionY).derecha;
+			
+			if (this.verificarSiguienteMovimiento(siguienteNodo) == true){
+				this.mover(siguienteNodo.coordenadaX, siguienteNodo.coordenadaY);
+			} else {
+				eliminarMoto(this.ubicacionX, this.ubicacionY);
+			}
+		}
+	}
+	
+	public void moverIzquierda(){
+		if (this.vida == true){
+
+			NodoMapa<Estela> siguienteNodo = this.buscarNodo(ubicacionX, ubicacionY).izquierda;
+			
+			if (this.verificarSiguienteMovimiento(siguienteNodo) == true){
+				this.mover(siguienteNodo.coordenadaX, siguienteNodo.coordenadaY);
+			} else {
+				eliminarMoto(this.ubicacionX, this.ubicacionY);
+			}
+		}
+	}
+	
+	public void moverArriba(){
+		if (this.vida == true){
+
+			NodoMapa<Estela> siguienteNodo = this.buscarNodo(ubicacionX, ubicacionY).arriba;
+			
+			if (this.verificarSiguienteMovimiento(siguienteNodo) == true){
+				this.mover(siguienteNodo.coordenadaX, siguienteNodo.coordenadaY);
+			} else {
+				eliminarMoto(this.ubicacionX, this.ubicacionY);
+			}
+		}
+	}
+	
+	public void moverAbajo(){
+		if (this.vida == true){
+
+			NodoMapa<Estela> siguienteNodo = this.buscarNodo(ubicacionX, ubicacionY).abajo;
+			
+			if (this.verificarSiguienteMovimiento(siguienteNodo) == true){
+				this.mover(siguienteNodo.coordenadaX, siguienteNodo.coordenadaY);
+			} else {
+				eliminarMoto(this.ubicacionX, this.ubicacionY);
+			}
+		}
+	}
+	
+	public void mover(int siguienteX, int siguienteY){
 		
+		NodoMapa<Estela> siguiente = this.buscarNodo(siguienteX, siguienteY);
+		NodoMapa<Estela> actual = this.buscarNodo(this.ubicacionX, this.ubicacionY);
+		
+		while (actual.dato.siguienteEstela != null){
+			siguiente.dato = actual.dato;
+			
+			siguiente.dato.ubicacionX = siguiente.coordenadaX;
+			siguiente.dato.ubicacionY = siguiente.coordenadaY;
+			
+			siguiente = actual;
+			actual = this.buscarNodo(actual.dato.siguienteEstela.ubicacionX, actual.dato.siguienteEstela.ubicacionY);
+			
+			if (actual == this.cabezaPrincipal){
+				siguiente.dato = siguiente.dato.siguienteEstela;
+				break;
+			}
+		} 
+		
+		if (actual != this.cabezaPrincipal){
+			siguiente.dato = actual.dato;
+			actual.dato = null;
+		}		
+		
+	}
+	
+	public NodoMapa<Estela> buscarNodo(int x, int y){
+		
+		NodoMapa<Estela> nodoEncontrado = cabezaPrincipal;
+		
+		for (int linea = 1; linea < x; linea ++){
+			nodoEncontrado = nodoEncontrado.derecha;
+		}
+		
+		for (int columna = 1; columna < y; columna ++){
+			nodoEncontrado = nodoEncontrado.abajo;
+		}		
+		
+		return nodoEncontrado;
+	}
+	
+	public void eliminarMoto(int x, int y){
+		NodoMapa<Estela> actual = buscarNodo(x, y);
+		NodoMapa<Estela> borrar = actual;
+		
+		while (actual.dato != null){
+			actual = buscarNodo(actual.dato.siguienteEstela.ubicacionX, actual.dato.siguienteEstela.ubicacionY);
+			borrar.dato = null;
+			borrar = actual;
+		}
+		this.vida = false;
+		this.cabezaPrincipal = null;
 	}
 	
 }
