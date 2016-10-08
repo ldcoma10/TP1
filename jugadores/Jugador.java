@@ -1,13 +1,13 @@
 package jugadores;
 
-public class Jugador extends Thread {
+public class Jugador extends Thread {    //Un thread es un hilo, el cual permite realizar de manera paralela actividades de diversas clases o métodos.
 	private String nombre;
 	private boolean activo;
 	private Integer ubicacionFila;
 	private Integer ubicacionColumna;
 	
 	
-	Jugador(){
+	public Jugador(){
 		nombre=null;
 		activo=false;
 	}
